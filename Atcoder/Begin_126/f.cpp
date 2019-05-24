@@ -47,6 +47,7 @@ void solve()
         cout << -1;
         return;
     }
+    
     if (k == 0)
     {
         for (int i = 0; i < n; ++i)
