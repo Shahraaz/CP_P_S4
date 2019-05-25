@@ -4,7 +4,7 @@ using namespace std;
 
 #define Online 1
 // #define multitest 1
-#define Debug 1
+// #define Debug 1
 typedef long long ll;
 typedef long double ld;
 #define f first
@@ -59,10 +59,35 @@ void pre()
 }
 void solve()
 {
-	int n, m, k;
+	ll n, m, k;
 	cin >> n >> m >> k;
 	pre();
-	ll ans = n+m;
+	vector<vector<ll>> Dp(n + 1, vector<ll>(m + 1));
+	ll ans = 0;
+	for (int i = 1; i <= n; ++i)
+		for (int j = 1; j <= m; ++j)
+		{
+			Dp[i][j] = Dp[i - 1][j];
+			db("Parent", i, j, Dp[i][j]);
+			Dp[i][j] += ll(j) * (j - 1) / 2 % mod;
+			db("Own Row", i, j, ll(j) * (j - 1) / 2 % mod);
+			Dp[i][j] %= mod;
+			Dp[i][j] += m * (i - 1) % mod;
+			db("PrevRow Extra", i, j, m * (i - 1) % mod);
+			Dp[i][j] %= mod;
+			if (i != 1)
+			{
+				Dp[i][j] += (m - j + 1) * (m - j) / 2 % mod;
+				db("PrevRow Sum", i, j, (m - j + 1) * (m - j) / 2 % mod);
+			}
+			else
+				db("PrevRow Sum", i, j, 0);
+			Dp[i][j] %= mod;
+			db(Dp[i][j]);
+			db("\n");
+			ans += Dp[i][j];
+			ans %= mod;
+		}
 	ans = (ans * Fact[n * m - 2]) % mod;
 	ans = (ans * Inv[k - 2]) % mod;
 	ans = (ans * Inv[n * m - k]) % mod;
