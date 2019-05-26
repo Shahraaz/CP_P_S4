@@ -35,6 +35,49 @@ void ZZ(const char *names, Arg1 &&arg1, Args &&... args)
 
 void solve()
 {
+	int q, a, b, t;
+	cin >> q;
+	ll answer = 0;
+	priority_queue<int> Left;
+	priority_queue<int, vector<int>, greater<int>> Right;
+	while (q--)
+	{
+		cin >> t;
+		if (t == 1)
+		{
+			cin >> a >> b;
+			answer += b;
+			if (Left.empty() or (Left.top() <= a && Right.top() >= a))
+			{
+				Left.push(a);
+				Right.push(a);
+			}
+			else if(a < Left.top())
+			{
+				int m = Left.top();
+				Left.pop();
+				answer += abs(m-a);
+				Right.push(m);
+				Left.push(a);
+				Left.push(a);
+			}
+			else
+			{
+				int m = Right.top();
+				Right.pop();
+				answer += abs(m-a);
+				Left.push(m);
+				Right.push(a);
+				Right.push(a);
+			}
+		}
+		else
+		{
+			if(Left.size()==0)
+				cout << 0 << ' ' << 0 << '\n';
+			else cout << Left.top() << ' ' << answer << '\n';
+		}
+	}
 }
 
 int main()
