@@ -5,7 +5,7 @@ using namespace std;
 #define Online 1
 // #define multitest 1
 #define Debug 1
-#ifdef Debug
+#ifdef Debug 
 #define db(...) ZZ(#__VA_ARGS__, __VA_ARGS__);
 template <typename Arg1>
 void ZZ(const char *name, Arg1 &&arg1)
