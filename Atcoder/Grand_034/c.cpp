@@ -37,7 +37,7 @@ void solve()
 {
 	int n,x;
 	cin >> n >> x;
-	
+	vector<>
 }
 
 int main()

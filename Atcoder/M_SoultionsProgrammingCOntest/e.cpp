@@ -77,7 +77,7 @@ void solve()
 	{
 		a = (a * power(d, mod - 2)) % mod;
 		if (a + n > mod)
-			cout << 0;
+			cout << 0 << '\n';
 		else
 		{
 			ll ans = power(d, n);
