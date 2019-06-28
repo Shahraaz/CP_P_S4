@@ -30,7 +30,7 @@ typedef long double ld;
 const long long mod = 1000000007;
 
 auto seed = chrono::high_resolution_clock::now().time_since_epoch().count();
-auto my_rand = std::bind(std::uniform_int_distribution<int>(0, 1e5),mt19937(seed));
+auto my_rand = std::bind(std::uniform_int_distribution<int>(0, 1e5), mt19937(seed));
 typedef vector<int> vi;
 typedef vector<vi> _graph;
 struct graph
@@ -138,18 +138,28 @@ void solve()
 			if (i < x)
 				m++;
 		}
-	cout << m << '\n';
+	cout << 3 << '\n';
 	for (int i = 0; i < n; ++i)
 		for (auto x : G[i])
 		{
 			if (i < x)
-				cout << i << ' ' << x << '\n';
+			{
+				// cout << i + 1 << ' ' << x + 1 << '\n';
+				int i1 = i + 1;
+				int x1 = x + 1;
+				if (i1 < 10)
+					cout << 0 << i1 << ' ';
+				else cout << i1 << ' ';
+				if (x1 < 10)
+					cout << 0 << x1 << '\n';
+				else cout << x1 << '\n';
+			}
 		}
 }
 
 int main()
 {
-	freopen("Gen.in", "r", stdin);
+	// freopen("Gen.in", "r", stdin);
 	freopen("Gen.ou", "w", stdout);
 #ifndef Debug
 	ios_base::sync_with_stdio(0);
