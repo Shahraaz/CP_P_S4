@@ -31,6 +31,31 @@ const long long mod = 1000000007;
 
 void solve()
 {
+	int n;
+	cin >> n;
+	vector<ld> Dp(n + 1);
+	ld x;
+	Dp[0] = 1;
+	db("start");
+	for (int i = 1; i <= n; ++i)
+	{
+		cin >> x;
+		for (int j = i; j >= 0; --j)
+		{
+			db(j);
+			Dp[j] = Dp[j] * (1 - x) + (j == 0 ? 0 : (Dp[j - 1] * x));
+		}
+	}
+	db("here");
+	ld ans = 0;
+	for (int i = 0; i <= n; ++i)
+	{
+		int j = n - i;
+		if (i > j)
+			ans += Dp[i];
+	}
+	cout << fixed << setprecision(10);
+	cout << ans;
 }
 
 int main()

@@ -29,8 +29,23 @@ typedef long double ld;
 #define pb push_back
 const long long mod = 1000000007;
 
+const int nax = 3005;
+ll dp[nax][nax];
+
 void solve()
 {
+	int n;
+	cin >> n;
+	vector<int> a(n + 1);
+	for (int i = 1; i <= n; ++i)
+		cin >> a[i];
+	for (int l = n; l >= 1; --l)
+		for (int j = l; j <= n; ++j)
+			if (l == j)
+				dp[l][j] = a[l];
+			else
+				dp[l][j] = max(a[l] - dp[l + 1][j], a[j] - dp[l][j - 1]);
+	cout << dp[1][n];
 }
 
 int main()

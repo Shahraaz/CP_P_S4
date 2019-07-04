@@ -40,6 +40,9 @@ void solve()
 	int h, w;
 	cin >> h >> w;
 	vector<string> grid(h);
+	// ll a1 = ll(1e18);
+	// int b = a1+a1;
+	// cout << b << ' ' << a1 << '\n';
 	for (auto &a : grid)
 		cin >> a;
 	vector<vector<int>> Dp(h, vector<int>(w));
@@ -54,7 +57,7 @@ void solve()
 				if (x < h && y < w && grid[x][y] == '.')
 					add(Dp[x][y], Dp[i][j]);
 				db(i, j, Dp[i][j]);
-				db(x, y, Dp[x][y],grid[x][y]);
+				db(x, y, Dp[x][y], grid[x][y]);
 			}
 	cout << Dp[h - 1][w - 1] << '\n';
 }

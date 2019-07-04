@@ -29,8 +29,52 @@ typedef long double ld;
 #define pb push_back
 const long long mod = 1000000007;
 
+const int nax = 3e2 + 5;
+ld p[nax][nax][nax], ev[nax][nax][nax];
+
 void solve()
 {
+	int n, x;
+	cin >> n;
+	vector<int> cnt(4);
+	for (int i = 0; i < n; ++i)
+	{
+		cin >> x;
+		cnt[x]++;
+	}
+	p[cnt[1]][cnt[2]][cnt[3]] = 1;
+	for (int c = n; c >= 0; --c)
+		for (int b = n; b >= 0; --b)
+			for (int a = n; a >= 0; --a)
+			{
+				if ((a + b + c) == 0)
+					continue;
+				if (a + b + c > n)
+					continue;
+				ld p_waste = (ld)(n - a - b - c) / n;
+				ld ev_waste = p_waste / (1 - p_waste) + 1;
+				ev[a][b][c] += ev_waste * p[a][b][c];
+				if (a != 0)
+				{
+					ld p_go = (ld)a / (a + b + c);
+					p[a - 1][b][c] += p[a][b][c] * p_go;
+					ev[a - 1][b][c] += ev[a][b][c] * p_go;
+				}
+				if (b != 0)
+				{
+					ld p_go = (ld)b / (a + b + c);
+					p[a + 1][b - 1][c] += p[a][b][c] * p_go;
+					ev[a + 1][b - 1][c] += ev[a][b][c] * p_go;
+				}
+				if (c != 0)
+				{
+					ld p_go = (ld)c / (a + b + c);
+					p[a][b + 1][c - 1] += p[a][b][c] * p_go;
+					ev[a][b + 1][c - 1] += ev[a][b][c] * p_go;
+				}
+			}
+	cout << fixed << setprecision(15);
+	cout << ev[0][0][0];
 }
 
 int main()

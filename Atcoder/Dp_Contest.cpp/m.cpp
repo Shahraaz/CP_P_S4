@@ -29,8 +29,49 @@ typedef long double ld;
 #define pb push_back
 const long long mod = 1000000007;
 
+const int nax = 1e5 + 10;
+ll dp[nax];
+
+template <typename T>
+void add_self(T &a, T b)
+{
+	a += b;
+	a += mod;
+	a %= mod;
+}
+
 void solve()
 {
+	int n, k, x;
+	cin >> n >> k;
+	dp[0] = 1;
+	for (int i = 0; i < n; ++i)
+	{
+		cin >> x;
+		vector<ll> fake(k + 1);
+		for (int used = k; used >= 0; --used)
+		{
+			ll temp = dp[used];
+			int l = used + 1;
+			int r = used + min(x, k - used);
+			if (l <= r)
+			{
+				add_self(fake[l], temp);
+				if (r + 1 <= k)
+					add_self(fake[r + 1], -temp);
+			}
+		}
+		ll sum = 0;
+		db("here",k);
+		for (int i = 0; i <= k; ++i)
+		{
+			db("Hi");
+			add_self(sum, fake[i]);
+			add_self(dp[i], sum);
+			db(dp[i], i);
+		}
+	}
+	cout << dp[k];
 }
 
 int main()

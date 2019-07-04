@@ -29,8 +29,61 @@ typedef long double ld;
 #define pb push_back
 const long long mod = 1000000007;
 
+vector<ll> Tree;
+
+ll query(int node, int start, int end, int qstart, int qend)
+{
+	if (start > end || qend < start || qstart > end)
+		return 0;
+	if (qstart <= start && end <= qend)
+		return Tree[node];
+	int mid = (start + end) / 2;
+	return max(query(2 * node, start, mid, qstart, qend),
+			   query(2 * node + 1, mid + 1, end, qstart, qend));
+}
+
+void update(int node, int start, int end, int pos, ll val)
+{
+	if (start > end)
+		return;
+	if (start == end)
+	{
+		Tree[node] = max(Tree[node], val);
+		return;
+	}
+	int mid = (start + end) / 2;
+	if (pos <= mid)
+		update(2 * node, start, mid, pos, val);
+	else
+		update(2 * node + 1, mid + 1, end, pos, val);
+	Tree[node] = max(Tree[node * 2], Tree[node * 2 + 1]);
+}
+
 void solve()
 {
+	int n;
+	cin >> n;
+	Tree.resize(4 * n);
+	vector<int> h(n), a(n);
+	for (auto &x : h)
+	{
+		cin >> x;
+		--x;
+	}
+	for (auto &x : a)
+		cin >> x;
+	vector<ll> dp(n + 1);
+	ll ans = 0;
+	for (int i = 0; i < n; ++i)
+	{
+		int x = h[i];
+		ll q = query(1, 0, n - 1, 0, x - 1);
+		dp[x] = max(dp[x], q + a[i]);
+		db(q, x, dp[x]);
+		ans = max(ans, dp[x]);
+		update(1, 0, n - 1, x, dp[x]);
+	}
+	cout << ans;
 }
 
 int main()

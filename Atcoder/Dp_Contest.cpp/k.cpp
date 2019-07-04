@@ -31,6 +31,17 @@ const long long mod = 1000000007;
 
 void solve()
 {
+	int n, k;
+	cin >> n >> k;
+	vector<bool> Dp(k + 1);
+	vector<int> a(n);
+	for (int i = 0; i < n; ++i)
+		cin >> a[i];
+	for (int i = 0; i <= k; ++i)
+		for (auto x : a)
+			if (i - x >= 0 && !Dp[i - x])
+				Dp[i] = true;
+	cout << (Dp[k] ? "First" : "Second");
 }
 
 int main()

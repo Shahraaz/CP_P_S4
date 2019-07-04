@@ -29,8 +29,32 @@ typedef long double ld;
 #define pb push_back
 const long long mod = 1000000007;
 
+template <typename T>
+void add_self(T &a, T b)
+{
+	a += b;
+	a %= mod;
+}
+
 void solve()
 {
+	int n;
+	cin >> n;
+	vector<vector<int>> can(n, vector<int>(n));
+	for (int i = 0; i < n; ++i)
+		for (int j = 0; j < n; ++j)
+			cin >> can[i][j];
+	vector<int> dp(1 << n);
+	dp[0] = 1;
+	for (int mask = 0; mask < (1 << n); ++mask)
+	{
+		int a = __builtin_popcount(mask);
+		db(a, mask, 1 << n);
+		for (int b = 0; b < n; ++b)
+			if (a < n && can[a][b] && !(mask & (1 << b)))
+				add_self(dp[mask | (1 << b)], dp[mask]);
+	}
+	cout << dp[(1 << n) - 1];
 }
 
 int main()

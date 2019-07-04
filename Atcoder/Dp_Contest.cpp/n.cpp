@@ -29,8 +29,37 @@ typedef long double ld;
 #define pb push_back
 const long long mod = 1000000007;
 
+const int nax = 405;
+ll INF = 1e18 + 5;
+ll dp[nax][nax];
+
 void solve()
 {
+	int n;
+	cin >> n;
+	vector<int> a(n);
+	for (int i = 0; i < n; ++i)
+		cin >> a[i];
+	auto sum = [&](int L, int R) {
+		ll sum = 0;
+		for (int i = L; i <= R; ++i)
+			sum += a[i];
+		return sum;
+	};
+	for (int l = n - 1; l >= 0; --l)
+		for (int r = l; r < n; ++r)
+		{
+			if (l == r)
+				dp[l][r] = 0;
+			else
+			{
+				dp[l][r] = INF;
+				ll s = sum(l, r);
+				for (int i = l; i <= r - 1; ++i)
+					dp[l][r] = min(dp[l][r], dp[l][i] + dp[i + 1][r] + s);
+			}
+		}
+	cout << dp[0][n - 1];
 }
 
 int main()

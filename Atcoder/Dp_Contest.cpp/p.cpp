@@ -29,8 +29,46 @@ typedef long double ld;
 #define pb push_back
 const long long mod = 1000000007;
 
+const int nax = 1e5 + 10;
+vector<int> Adj[nax];
+
+ll mul(ll a, ll b)
+{
+	return (a % mod * b % mod) % mod;
+}
+
+ll add(ll a, ll b)
+{
+	return (a + b + mod) % mod;
+}
+
+pair<int, int> dfs(int node, int parent)
+{
+	int all_white = 1;
+	int sth_is_black = 0;
+	for (int b : Adj[node])
+		if (b != parent)
+		{
+			pair<int, int> p = dfs(b, node);
+			int prev = all_white;
+			all_white = mul(all_white, p.second);
+			sth_is_black = add(mul(prev, p.f), mul(sth_is_black, p.f + p.s));
+		}
+	return {all_white, add(all_white, sth_is_black)};
+}
+
 void solve()
 {
+	int n, u, v;
+	cin >> n;
+	for (int i = 1; i < n; ++i)
+	{
+		cin >> u >> v;
+		Adj[u].pb(v);
+		Adj[v].pb(u);
+	}
+	auto ret = dfs(1, -1);
+	cout << add(ret.f, ret.s);
 }
 
 int main()
