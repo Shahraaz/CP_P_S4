@@ -35,11 +35,10 @@ def generate(x,k):
 	permute=permutations(elem,k)	
 	# File to write the constraints acc to the permutation
 	con=open("constraints.txt",'w') 
-    	for index in permute: 
+        for index in permute: 
 		p_list=[i for i in index]
 		for i in range(len(p_list)-1):
-			con.write('~'+x+'_'+ "%02d"%p_list[i]+ "%02d"%p_list[i+1]+' '+'|'+' ')
-        		#con.write('~'+x+'_'+ str(p_list[i])+ str(p_list[i+1])+' '+'|'+' ')
+			con.write('~'+x+'_'+ "%02d"%p_list[i]+ "%02d"%p_list[i+1]+' '+'|'+' ') #con.write('~'+x+'_'+ str(p_list[i])+ str(p_list[i+1])+' '+'|'+' ')
     		con.write(x+'_'+ "%02d"%p_list[0]+ "%02d"%p_list[2]+' '+'|'+' ')
     		con.write(x+'_'+ "%02d"%p_list[0]+ "%02d"%p_list[3]+' '+'|'+' ')
     		con.write(x+'_'+ "%02d"%p_list[1]+ "%02d"%p_list[3]+' '+'&')
